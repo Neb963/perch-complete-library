@@ -1,0 +1,69 @@
+{
+  "name": "perch-complete-library",
+  "version": "0.1.0",
+  "description": "Typed, locally bundled reusable capabilities for Perchance generators",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    "./core": {
+      "types": "./dist/library/public/core.d.ts",
+      "import": "./dist/library/public/core.js"
+    },
+    "./storage": {
+      "types": "./dist/library/public/storage.d.ts",
+      "import": "./dist/library/public/storage.js"
+    },
+    "./text": {
+      "types": "./dist/library/public/text.d.ts",
+      "import": "./dist/library/public/text.js"
+    },
+    "./image": {
+      "types": "./dist/library/public/image.d.ts",
+      "import": "./dist/library/public/image.js"
+    },
+    "./gallery": {
+      "types": "./dist/library/public/gallery.d.ts",
+      "import": "./dist/library/public/gallery.js"
+    },
+    "./comments": {
+      "types": "./dist/library/public/comments.d.ts",
+      "import": "./dist/library/public/comments.js"
+    },
+    "./chat": {
+      "types": "./dist/library/public/chat.d.ts",
+      "import": "./dist/library/public/chat.js"
+    },
+    "./host": {
+      "types": "./dist/library/public/host.d.ts",
+      "import": "./dist/library/public/host.js"
+    },
+    "./build": {
+      "types": "./dist/library/public/build.d.ts",
+      "import": "./dist/library/public/build.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/library/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.tests.json && tsc --noEmit -p tsconfig.build.json",
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.build.json",
+    "test": "node scripts/run-tests.mjs",
+    "verify": "npm run typecheck && npm run build && npm test && node scripts/validate-library.mjs && node scripts/check-docs.mjs && node scripts/consumer-smoke.mjs",
+    "pack:check": "npm run build && node scripts/validate-library.mjs && npm pack --dry-run --json"
+  },
+  "devDependencies": {
+    "@types/node": "20.16.11",
+    "typescript": "5.6.3"
+  }
+}

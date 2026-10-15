@@ -1,0 +1,17 @@
+import {createRoomBinder,type RoomMessage} from '../src/comments/bindRoom.js';
+import {installMiniDom,createTestHost} from './helpers/dom-shim.js';
+installMiniDom();
+const seen:RoomMessage[]=[];const call:string[]=[];let nativeOpts:Record<string,unknown>|null=null;
+const room=createRoomBinder((_channel,opts)=>{nativeOpts=opts;return {toString:()=>'<iframe></iframe>',submit:(text:string)=>{call.push('submit:'+text);},setNicknameForNextComment:(s:string)=>call.push('nick:'+s),setAvatarUrlForNextComment:(s:string)=>call.push('avatar:'+s)};}).mount({channel:'plr1-test',presentation:'custom-qualified',host:createTestHost() as never},{onInitial:x=>seen.push(...x),onMessage:x=>seen.push(x)});
+if(room.kind!=='ok')throw Error('mount');
+if(!nativeOpts)throw Error('options inaccessible');
+const opts=nativeOpts as Record<string,unknown>;
+if(typeof opts['onLoad']!=='function'||typeof opts['onComment']!=='function')throw Error('documented native callbacks not wired');
+(opts['onLoad'] as (x:unknown[])=>void)([{message:'A',time:100,user:{id:'alice'}}]);
+(opts['onComment'] as (x:unknown)=>void)({message:'B',time:101,user:{id:'bob'}});
+if(seen.length!==2||seen[0]?.bodyUnsafe!=='A'||seen[1]?.bodyUnsafe!=='B')throw Error('callback projection');
+const a=room.value.submit('one',{nickname:'A'});const b=room.value.submit('two',{nickname:'B'});
+const res=await Promise.all([a,b]);if(res.some(x=>x.kind!=='invoked'))throw Error('native invocation false');
+if(call.join('|')!=='nick:A|submit:one|nick:B|submit:two')throw Error('identity submission interleaved '+call.join('|'));
+room.value.disposeHost();(opts['onComment'] as (x:unknown)=>void)({message:'late',time:102});if(seen.length!==2)throw Error('late callback');
+console.log('PASS native documented callbacks, queue serialization, disposal');

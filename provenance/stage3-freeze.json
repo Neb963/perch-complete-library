@@ -1,0 +1,8 @@
+{
+  "sourceArchive": "perchance-libraries-stage3-FROZEN-final.zip",
+  "sha256": "6b2113c48de4547bb2bd2e8cdfb3b55c5414bdd82cb95a91011bc6e1d65e352d",
+  "frozenRuntimeBuildId": "524b0c6d7a8f",
+  "designVersion": "v0.3.6 + erratum",
+  "liveEvidence": "Native observations retained in frozen archive. Not replayed against release package.",
+  "sourceMapping": "implementation/src/* => src/*; implementation/tests/* => tests/*; added src/public/*; stable distribution excludes ui/browser/application fixtures."
+}

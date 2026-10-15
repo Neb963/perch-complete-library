@@ -1,0 +1,40 @@
+import { effectiveLink, ancestorChain, buildPrompt, newConversation } from '../src/chat/model.js';
+import * as R from '../src/app/reducers.js';
+{
+  const c = {deleted:false, value:{incarnationId:'i1'}};
+  if (effectiveLink(c as never, {characterState:'linked', characterIncarnationId:'i1'} as never)!=='linked') throw new Error('link');
+  if (effectiveLink(c as never, {characterState:'detached', characterIncarnationId:'i1'} as never)!=='detached') throw new Error('sticky');
+  const turns = [{id:'a',parentTurnId:null,branchId:'b1'},{id:'b',parentTurnId:'a',branchId:'b1'},{id:'c',parentTurnId:'a',branchId:'b2'}];
+  if (ancestorChain(turns as never,'b').length!==2) throw new Error('ancestry');
+  const conv = newConversation('conv1', {id:'ch1',incarnationId:'i1',name:'Bob',systemPrompt:'s'});
+  if (conv.characterState!=='linked') throw new Error('new conv');
+  const p = buildPrompt({...conv, turns:[{id:'t1',parentTurnId:null,branchId:'b1',speaker:{kind:'user',participantId:'u1',displayName:'User'},text:'hi',revision:1,status:'final'}] as never, activeBranchId:'b1', activeBranchLeafId:'t1'});
+  if (!p.includes('hi')) throw new Error('prompt');
+}
+const results: Array<[string, boolean]> = [];
+function t(id: string, fn: ()=>void){ try{fn(); results.push([id,true]);}catch(e){ results.push([id,false]); throw new Error(id+' '+(e as Error).message); } }
+t('A01',()=>{ if(!R.a01_createCharacter('Bob').ok) throw new Error('a01'); if(R.a01_createCharacter('').ok) throw new Error('a01 neg'); });
+t('A02',()=>{ const r=R.a02_newConversation({id:'c',incarnationId:'i',name:'N',systemPrompt:'s'}); if(!r.ok) throw new Error('a02'); });
+t('A03',()=>{ if(!R.a03_switch('d','x',['x']).ok) throw new Error('a03'); if(R.a03_switch('d','y',['x']).ok) throw new Error('a03 neg'); });
+t('A04',()=>{ if(!R.a04_send('hi',false).ok) throw new Error('a04'); if(R.a04_send('',false).ok) throw new Error('a04 neg'); });
+t('A05',()=>{ if(!R.a05_stop(true,false).ok) throw new Error('a05'); if(R.a05_stop(false,false).ok) throw new Error('a05 neg'); });
+t('A06',()=>{ if(!R.a06_regenerate(0).ok) throw new Error('a06'); if(R.a06_regenerate(2).ok) throw new Error('a06 neg'); });
+t('A07',()=>{ if(!R.a07_edit([{id:'a',parentTurnId:null}],'a').ok) throw new Error('a07'); });
+t('A08',()=>{ if(!R.a08_import('merge').ok) throw new Error('a08'); if(R.a08_import('replace').ok) throw new Error('a08 neg'); });
+t('A09',()=>{ if(!R.a09_openRoom('general',false).ok) throw new Error('a09'); });
+t('A10',()=>{ if(!R.a10_sendCustom('custom-qualified','hi').ok) throw new Error('a10'); if(R.a10_sendCustom('native','hi').ok) throw new Error('a10 neg'); });
+t('A11',()=>{ if(!R.a11_settings(true).ok) throw new Error('a11'); });
+t('A12',()=>{ if(!R.a12_retry(false).ok) throw new Error('a12'); });
+t('B01',()=>{ if(!R.b01_preset('P').ok) throw new Error('b01'); });
+t('B02',()=>{ if(!R.b02_editPrompt().ok) throw new Error('b02'); });
+t('B03',()=>{ if(!R.b03_tile(0).ok) throw new Error('b03'); if(R.b03_tile(4).ok) throw new Error('b03 neg'); });
+t('B04',()=>{ if(!R.b04_data(true).ok) throw new Error('b04'); });
+t('B05',()=>{ if(!R.b05_gallery().ok) throw new Error('b05'); });
+t('B06',()=>{ if(!R.b06_favorite('unknown').ok) throw new Error('b06'); });
+t('B07',()=>{ if(!R.b07_portable('merge').ok) throw new Error('b07'); });
+t('B08',()=>{ if(!R.b08_download('available').ok) throw new Error('b08'); if(R.b08_download('pending').ok) throw new Error('b08 neg'); });
+t('B09',()=>{ if(!R.b09_regenerate(true).ok) throw new Error('b09'); });
+t('B10',()=>{ if(!R.b10_settings(true).ok) throw new Error('b10'); });
+t('B11',()=>{ if(!R.b11_galleryClick({prompt:'p'}).ok) throw new Error('b11'); });
+if (R.ALL_23.length!==23) throw new Error('23 count');
+console.log('PASS reducers 23');

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist/library",
+    "rootDir": "src",
+    "declaration": true
+  },
+  "include": [
+    "src/public/**/*.ts"
+  ],
+  "exclude": [
+    "tests",
+    "src/browser",
+    "src/ui"
+  ]
+}
