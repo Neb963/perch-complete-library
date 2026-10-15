@@ -1,14 +1,14 @@
 // Actual Stage 3 generator entry. No provider calls at boot.
 // Manual actions exercise the SAME ordinary modules included in the production bundle.
-import { DraftStore, bindKv, type DomainDef } from '../kv/store.js';
-import { newConversation, ancestorChainForConversation, effectiveLink, buildPrompt, type CharacterRecord, type ConversationRecord } from '../chat/model.js';
-import { bindText, type NativeBackend } from '../text/bindText.js';
-import { TextDispatchScheduler } from '../core/scheduler.js';
-import { createRoomBinder, type NativeRoomInstance, type RoomHandle } from '../comments/bindRoom.js';
-import { bindImage, type NativeImageBackend } from '../image/bindImage.js';
-import { JobStore } from '../image/jobs.js';
-import { bindGallery } from '../image/gallery.js';
-import { exportLocal, importLocal, verifyBundle } from '../kv/portable.js';
+import { DraftStore, bindKv, type DomainDef } from '../../../src/kv/store.js';
+import { newConversation, ancestorChainForConversation, effectiveLink, buildPrompt, type CharacterRecord, type ConversationRecord } from '../../../src/chat/model.js';
+import { bindText, type NativeBackend } from '../../../src/text/bindText.js';
+import { TextDispatchScheduler } from '../../../src/core/scheduler.js';
+import { createRoomBinder, type NativeRoomInstance, type RoomHandle } from '../../../src/comments/bindRoom.js';
+import { bindImage, type NativeImageBackend } from '../../../src/image/bindImage.js';
+import { JobStore } from '../../../src/image/jobs.js';
+import { bindGallery } from '../../../src/image/gallery.js';
+import { exportLocal, importLocal, verifyBundle } from '../../../src/kv/portable.js';
 
 declare const root: {kv:Record<string,unknown>;generateText:(opts:Record<string,unknown>)=>unknown;generateImage:(opts:Record<string,unknown>)=>unknown;commentsPlugin:(opts:Record<string,unknown>)=>NativeRoomInstance};
 const el=document.getElementById('app-root');

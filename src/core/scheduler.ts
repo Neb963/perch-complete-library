@@ -1,5 +1,5 @@
 // S3-06 TextDispatchScheduler — single per native backend at composition root (v0.3.6 §22.4).
-import { ok, err, type Outcome } from '../core/outcome.js';
+import { ok, err, type Outcome } from './outcome.js';
 import type { BoundText, TextOptions, TextFinal } from '../text/bindText.js';
 
 export type SessionId = string;

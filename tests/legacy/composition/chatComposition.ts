@@ -1,12 +1,12 @@
 // S3-16 chat composition — real consumer flow:
 // bootstrap → text adapter → scheduler → conversation state → generation → KV commit → reload → UI projection.
 // Exercises actual implementations with fakes; traces operation IDs + causal diagnostics.
-import { DraftStore, type KvFolderLike, type DomainDef } from '../kv/store.js';
-import { bindText, type NativeBackend } from '../text/bindText.js';
-import { TextDispatchScheduler } from '../core/scheduler.js';
-import { createRoomBinder, type RoomMessage } from '../comments/bindRoom.js';
-import { newConversation, ancestorChainForConversation } from '../chat/model.js';
-import { ok, err, type Outcome } from '../core/outcome.js';
+import { DraftStore, type KvFolderLike, type DomainDef } from '../../../src/kv/store.js';
+import { bindText, type NativeBackend } from '../../../src/text/bindText.js';
+import { TextDispatchScheduler } from '../../../src/core/scheduler.js';
+import { createRoomBinder, type RoomMessage } from '../../../src/comments/bindRoom.js';
+import { newConversation, ancestorChainForConversation } from '../../../src/chat/model.js';
+import { ok, err, type Outcome } from '../../../src/core/outcome.js';
 
 export type ChatCompDeps = {
   folders: (f: string) => KvFolderLike;

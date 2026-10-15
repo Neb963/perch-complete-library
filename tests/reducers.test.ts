@@ -1,5 +1,5 @@
 import { effectiveLink, ancestorChain, buildPrompt, newConversation } from '../src/chat/model.js';
-import * as R from '../src/app/reducers.js';
+import * as R from './legacy/app/reducers.js';
 {
   const c = {deleted:false, value:{incarnationId:'i1'}};
   if (effectiveLink(c as never, {characterState:'linked', characterIncarnationId:'i1'} as never)!=='linked') throw new Error('link');

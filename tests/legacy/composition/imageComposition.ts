@@ -1,9 +1,9 @@
 // S3-17 image composition — real consumer flow:
 // bootstrap → image data/tile → job history → KV persistence → gallery → UI → reload.
-import { JobStore } from '../image/jobs.js';
-import { bindGallery } from '../image/gallery.js';
-import { bindImage, type NativeImageBackend } from '../image/bindImage.js';
-import type { KvFolderLike } from '../kv/store.js';
+import { JobStore } from '../../../src/image/jobs.js';
+import { bindGallery } from '../../../src/image/gallery.js';
+import { bindImage, type NativeImageBackend } from '../../../src/image/bindImage.js';
+import type { KvFolderLike } from '../../../src/kv/store.js';
 
 export type ImageCompDeps = {
   folder: KvFolderLike;

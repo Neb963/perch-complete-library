@@ -1,4 +1,4 @@
-import { reloadFence, staleCallbackGuard, unknownRetention } from '../src/regression/crossCutting.js';
+import { reloadFence, staleCallbackGuard, unknownRetention } from './legacy/regression/crossCutting.js';
 {
   const r = await reloadFence('sess-a','sess-b','op1');
   if (!r.ok) throw new Error('fence');
