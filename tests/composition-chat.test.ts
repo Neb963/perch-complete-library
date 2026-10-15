@@ -1,4 +1,4 @@
-import { runChatComposition } from '../src/composition/chatComposition.js';
+import { runChatComposition } from './legacy/composition/chatComposition.js';
 import { FakeKvFolder } from '../src/core/outcome.js';
 import { installMiniDom, createTestHost } from './helpers/dom-shim.js';
 {

@@ -1,5 +1,5 @@
 // S3-13 A/B action reducers — 23 actions, pure + store-backed where needed.
-import { newConversation, ancestorChain, type ConversationRecord, type CharacterRecord } from '../chat/model.js';
+import { newConversation, ancestorChain, type ConversationRecord, type CharacterRecord } from '../../../src/chat/model.js';
 
 export type ActionResult = { ok: boolean; code?: string; detail?: string };
 

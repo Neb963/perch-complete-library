@@ -1,4 +1,4 @@
-import { Button, Field, Dialog, Tabs, Status } from '../src/ui/primitives.js';
+import { Button, Field, Dialog, Tabs, Status } from './legacy/ui/primitives.js';
 import { installMiniDom } from './helpers/dom-shim.js';
 installMiniDom();
 function getDoc(): { createElement: (t: string) => { appendChild: (c: unknown) => void }; body: { appendChild: (c: unknown) => void } } { return (globalThis as unknown as { __dom: { document: { createElement: (t: string) => { appendChild: (c: unknown) => void }; body: { appendChild: (c: unknown) => void } } } }).__dom.document; }

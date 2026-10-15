@@ -1,4 +1,4 @@
-import { runImageComposition } from '../src/composition/imageComposition.js';
+import { runImageComposition } from './legacy/composition/imageComposition.js';
 import { FakeKvFolder } from '../src/core/outcome.js';
 import { installMiniDom, createTestHost } from './helpers/dom-shim.js';
 {
